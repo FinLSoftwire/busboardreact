@@ -30,19 +30,19 @@ function History(): React.ReactElement {
         return <div>Loading content...</div>;
     }
 
-    function populateNavigation() :void {
+    function populatePageNavigation() :void {
         console.log('populate navigation');
-        let navigation = document.getElementById('navigation');
-        if (navigation == null) {
+        let pageNavigation = document.getElementById('navigation');
+        if (pageNavigation == null) {
             return;
         }
-        navigation.innerHTML = '';
+        pageNavigation.innerHTML = '';
         contentText.forEach((element: history) :void => {
             let newButton = document.createElement("button");
             newButton.id = element.name;
             newButton.innerHTML = element.name;
             newButton.addEventListener("click", () => { setContentEntryIndex(element.id - 1)});
-            navigation?.appendChild(newButton);
+            pageNavigation?.appendChild(newButton);
         })
     }
 
@@ -57,14 +57,14 @@ function History(): React.ReactElement {
     }
     function populatePage() :void {
         console.log('populate page');
-        populateNavigation();
+        populatePageNavigation();
         populateContent();
     }
 
-    return <>
-    <h1> History of TfL Buses </h1>
+    return <div className="container-fluid centred">
+    <h1> 🚌 History of TfL Buses 🚌 </h1>
     <div id="navigation"> </div>
     <div id="content-container">content blank </div>
-    </>
+    </div>
 }
 export default History;
