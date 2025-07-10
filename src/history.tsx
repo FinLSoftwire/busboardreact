@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {json} from "node:stream/consumers";
+import './sitewide.css';
+
 
 class history{
     public id: number;
@@ -12,51 +13,58 @@ class history{
     }
 }
 
-function History(): React.ReactElement {
-    const [content, setContent] = useState<history[]>([]);
+const contentText = require('./history.json')
 
-    useEffect(() =>{populatePage();
-        fetch ('/history.json')
+function History(): React.ReactElement {
+    const [content, setContent] = useState<string>("default text");
+    const [contentEntryIndex, setContentEntryIndex] = useState<number>(0);
+
+    useEffect(() =>{ populatePage();
+        fetch ('history.json')
         .then ((response: Response) => response.json())
         .then (content => setContent(content))
         .catch((error: Error) => console.error('cannot fetch content', error));
-    }, []);
+    }, [populatePage]);
 
-    if (!content || content[0] === undefined) {
+    if (!contentText || contentText[0] === undefined) {
         return <div>Loading content...</div>;
     }
 
-    function populateNavigation(){
+    function populateNavigation() :void {
+        console.log('populate navigation');
         let navigation = document.getElementById('navigation');
         if (navigation == null) {
-            return <div>Loading navigation...</div>;
+            return;
         }
         navigation.innerHTML = '';
-        content.forEach((element: history) => {
+        contentText.forEach((element: history) :void => {
             let newButton = document.createElement("button");
             newButton.id = element.name;
             newButton.innerHTML = element.name;
+            newButton.addEventListener("click", () => { setContentEntryIndex(element.id - 1)});
             navigation?.appendChild(newButton);
         })
     }
 
-    function populateContent(){
+    function populateContent() :void {
+        console.log('populate content');
         let container = document.getElementById('content-container');
         if (container == null){
-            return <div>Loading content</div>;
+            return;
         }
         container.innerHTML = "";
-        container.innerHTML = content[0].content;
+        container.innerHTML = contentText[contentEntryIndex].content;
     }
-    function populatePage(){
-            populateNavigation();
-            populateContent();
+    function populatePage() :void {
+        console.log('populate page');
+        populateNavigation();
+        populateContent();
     }
 
     return <>
     <h1> History of TfL Buses </h1>
     <div id="navigation"> </div>
     <div id="content-container">content blank </div>
-            </>
+    </>
 }
 export default History;
