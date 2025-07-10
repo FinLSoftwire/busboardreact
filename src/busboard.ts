@@ -31,7 +31,6 @@ const fetchPostcodeLongitudeLatitude = async(postCode: string): Promise<[number,
         const receivedPostCodeJSON = await postCodeResponse.json();
         if (receivedPostCodeJSON.status >= 300) {
             console.error("Post code not found");
-            return [0,0];
         } else {
             return [receivedPostCodeJSON.result.longitude, receivedPostCodeJSON.result.latitude];
         }
@@ -79,8 +78,8 @@ function outputPredictedArrivalsFromJSON(predictedArrivalsJSON: {stationName: st
 export async function getBusPredictions (requestedBusStopPostCode: string){
     let busPredictions: busInfo[][] = [];
     const postCodeLongLat = await fetchPostcodeLongitudeLatitude(requestedBusStopPostCode);
-    if (postCodeLongLat === null) {
-        return [];
+    if (postCodeLongLat[0] === 0 && postCodeLongLat[1] === 0) {
+        throw new Error("Invalid Postcode");
     }
     const nearbyStops = await fetchBusStopsByLongitudeLatitude(...postCodeLongLat);
     for (let stopIndex = 0; stopIndex < Math.min(2, nearbyStops.length); stopIndex++) {

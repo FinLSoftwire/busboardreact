@@ -4,6 +4,8 @@
     --table-highlight-colour: #f3f3f3;
     --table-lowlight-colour: #E2E4E7;
     --table-dark-accent: #1772D1;
+    --error-color-dark: #AE1414;
+    --error-color-light: pink;
 }
 
 /* Class names */
@@ -13,6 +15,30 @@
     margin-right: auto;
 }
 
+.column-title{
+    font-size: smaller;
+    font-style: oblique;
+    background-color: var(--table-header-lighter);
+}
+
+.hidden {
+    display: none;
+}
+
+.error-container {
+    color: var(--error-color-dark);
+}
+
+.error-container p{
+    background-color: var(--error-color-light);
+    text-align: center;
+    padding: 3px 5px;
+    overflow: clip;
+    border-radius: 4px;
+    width: fit-content;
+    border: solid;
+    border-color: var(--error-color-dark);
+}
 
 /* Table styling */
 table {
@@ -42,10 +68,4 @@ tbody tr:nth-of-type(even) {
 }
 tbody tr:last-of-type {
     border-bottom: 2px solid var(--table-dark-accent);
-}
-
-.column-title{
-    font-size: smaller;
-    font-style: oblique;
-    background-color: var(--table-header-lighter);
 }
