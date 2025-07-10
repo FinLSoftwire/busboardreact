@@ -16,7 +16,7 @@
 body{
     font-family: var(--default-font);
     font-weight: 500;
-    font-size: 25px;
+    font-size: 1em;
 }
 
 h1{
