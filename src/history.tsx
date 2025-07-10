@@ -17,9 +17,9 @@ function History(): React.ReactElement {
 
     useEffect(() =>{
         fetch ('/history.json')
-        .then((response: Response) => response.json())
-            .then (content => setContent(content))
-            .catch((error: Error) => console.error('cannot fetch content', error));
+        .then ((response: Response) => response.json())
+        .then (content => setContent(content))
+        .catch((error: Error) => console.error('cannot fetch content', error));
     }, []);
 
     if (!content || content[0] == undefined) {
@@ -29,7 +29,7 @@ function History(): React.ReactElement {
     function populateNavigation(){
         let navigation = document.getElementById('navigation');
         if (navigation == null) {
-            return <> Error: navigation not found </>;
+            return;
         }
         navigation.innerHTML = '';
         content.forEach((element: history) => {
@@ -43,7 +43,7 @@ function History(): React.ReactElement {
     function populateContent(){
         let container = document.getElementById('content-container');
         if (container == null){
-            return <div>Error in content-container</div>;
+            return;
         }
         container.innerHTML = "";
         // let historyText = document.createElement("div");
@@ -53,8 +53,8 @@ function History(): React.ReactElement {
 
     return <>
     <h1> History of TfL Buses </h1>
-    <div id="navigation">  </div>{populateNavigation()}
-    <div id="content-container">content blank </div>{populateContent()}
+    <div id="navigation">  </div>
+    <div id="content-container">content blank </div>{populateNavigation()}{populateContent()}
     </>
 }
 export default History;
