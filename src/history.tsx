@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import './sitewide.css';
+import './history.css';
 
 const contentText = require('./history.json')
 
