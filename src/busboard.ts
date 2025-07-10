@@ -11,6 +11,19 @@ export class busInfo{
     }
 }
 
+export class lineDisruptionInfo{
+    public stationName: string;
+    public fromDate: string;
+    public toDate: string;
+    public description: string;
+    constructor(stationName: string, fromDate: string, toDate: string, description: string) {
+        this.stationName = stationName;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.description = description;
+    }
+}
+
 const outputBusStopArrivals = async(busStopID: string) => {
     try {
         const busArrivalsResponse = await fetch("https://api.tfl.gov.uk/StopPoint/"+busStopID+"/Arrivals");
@@ -32,6 +45,7 @@ const fetchPostcodeLongitudeLatitude = async(postCode: string): Promise<[number,
         if (receivedPostCodeJSON.status >= 300) {
             console.error("Post code not found");
         } else {
+            console.log(receivedPostCodeJSON.result);
             return [receivedPostCodeJSON.result.longitude, receivedPostCodeJSON.result.latitude];
         }
     } catch (error) {
@@ -55,6 +69,29 @@ const fetchBusStopsByLongitudeLatitude = async(longitude: number, latitude: numb
     } catch (e) {
         console.error(e);
     }
+}
+
+async function getDisruptionsByID(stopPointID: number): Promise<lineDisruptionInfo[]> {
+    let lineDisruptions: lineDisruptionInfo[] = [];
+    try {
+        let stationDisruptionsResponse = await fetch("https://api.tfl.gov.uk/StopPoint/"+stopPointID+"/Disruption");
+        let retrievedStationDisruptions = await stationDisruptionsResponse.json();
+        if (retrievedStationDisruptions.status >= 300) {
+            console.log("Failed to find disruptions for the given station");
+            return [];
+        } else {
+            retrievedStationDisruptions.forEach(
+                (retrievedDisruption: {stationAtcoCode: string, fromDate: string, toDate: string, description: string}) => {
+                    lineDisruptions.push(new lineDisruptionInfo(
+                        retrievedDisruption.stationAtcoCode, retrievedDisruption.fromDate,
+                        retrievedDisruption.toDate, retrievedDisruption.description));
+                }
+            );
+        }
+    } catch (e) {
+        console.error(e);
+    }
+    return lineDisruptions;
 }
 
 function outputPredictedArrivalsFromJSON(predictedArrivalsJSON: {stationName: string; lineName: string; towards: string; timeToStation: number}[]) {
@@ -89,5 +126,3 @@ export async function getBusPredictions (requestedBusStopPostCode: string){
     }
     return busPredictions;
 }
-
-//getBusPredictions("NW51TL").then( busPredictions => console.log(busPredictions));

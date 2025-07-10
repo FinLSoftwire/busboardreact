@@ -72,6 +72,8 @@ function App(): React.ReactElement {
     }
     tableContainer.innerHTML = "";
     tableData.forEach((busStopArrivalsInfo)=>{
+      if (busStopArrivalsInfo.length === 0)
+        return;
       const busStopTimetable = document.createElement('table');
       busStopTimetable.className = "centred";
       tableContainer?.appendChild(busStopTimetable);
