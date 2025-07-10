@@ -1,1 +1,16 @@
 @import url('sitewide.css');
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css");
+
+
+.navbar-default{
+    background-color: white;
+    font-size: large;
+    font-family: var(--default-font);
+    font-style: oblique;
+    margin: 0;
+    color: black;
+}
+
+Nav{
+    color: black;
+}

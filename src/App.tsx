@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import './busboard';
 import {busInfo, getBusPredictions} from "./busboard";
 import './sitewide.css';
+import Navbar from './navbar';
 
 import searchIcon from './searchIcon.png';
 
@@ -96,6 +97,7 @@ function App(): React.ReactElement {
   }
 
   return <>
+    <Navbar/>
     <div className="container-fluid centred">
       <h1> 🚌 BusBoard 🚌 </h1>
       <form action="" onSubmit={formHandler}>

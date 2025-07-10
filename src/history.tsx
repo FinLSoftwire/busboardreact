@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './history.css';
+import Navbar from './navbar';
 
 const contentText = require('./history.json')
 
@@ -52,7 +53,8 @@ function History(): React.ReactElement {
         populateContent();
     }
 
-    return <div className="container-fluid centred">
+    return  <div className="container-fluid centred">
+        <Navbar/>
     <h1> 🚌 History of TfL Buses 🚌 </h1>
     <div id="history-page-navigation" className="page-navigation"> </div>
     <div id="history-content-container"className="content-container">content blank </div>
