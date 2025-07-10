@@ -8,6 +8,7 @@
     --error-color-light: pink;
     --search-bar-background: #F5F5F5;
     --default-font: arial;
+    --spinner-radius: 2em;
 }
 
 
@@ -119,6 +120,25 @@ input:-webkit-autofill:active{
     border-color: var(--error-color-dark);
 }
 
+.spinner {
+    width: 2em;
+    height: 2em;
+    border: 0.4em solid var(--table-lowlight-colour);
+    border-top: 0.4em solid var(--table-header-lighter);
+    border-radius: 50%;
+    animation: spin 1s ease-in-out infinite;
+    margin-top: 1em;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(-45deg);
+    }
+    100% {
+        transform: rotate(315deg);
+    }
+}
+
 /* Table styling */
 table {
     border-collapse: collapse;
@@ -147,8 +167,4 @@ tbody tr:nth-of-type(even) {
 }
 tbody tr:last-of-type {
     border-bottom: 2px solid var(--table-dark-accent);
-}
-
-input {
-    padding-inline: 0px;
 }
