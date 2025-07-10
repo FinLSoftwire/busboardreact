@@ -53,11 +53,12 @@ function History(): React.ReactElement {
         populateContent();
     }
 
-    return  <div className="container-fluid centred">
-        <Navbar/>
+    return  <><Navbar/>
+    <div className="container-fluid centred">
     <h1> 🚌 History of TfL Buses 🚌 </h1>
     <div id="history-page-navigation" className="page-navigation"> </div>
     <div id="history-content-container"className="content-container">content blank </div>
     </div>
+        </>
 }
 export default History;
