@@ -24,7 +24,7 @@ function App(): React.ReactElement {
   function createTD(arrivalInfo: busInfo): HTMLTableRowElement {
     let tableEntry = document.createElement('tr');
     tableEntry.innerHTML = "<td>" + arrivalInfo.lineName + "</td><td>" +
-        arrivalInfo.destination + "</td><td>" + arrivalInfo.timeToArrival + "</td>";
+        arrivalInfo.destination + "</td><td>" + Math.ceil(arrivalInfo.timeToArrival/60) + " mins </td>";
     return tableEntry;
   }
   function populateBusTimetable() {
@@ -40,7 +40,8 @@ function App(): React.ReactElement {
       tableContainer?.appendChild(timetable);
       timetable.innerHTML = "";
       const timeTableHeader = document.createElement('thead');
-      timeTableHeader.innerHTML = "<th colspan='3'>" + busStopArrivalInfo[0].stationName + "</th>";
+      timeTableHeader.innerHTML = "<tr><th colspan='3'>" + busStopArrivalInfo[0].stationName + "</th></tr>" +
+          "<tr class='column-title'><td>Bus Number</td><td>Destination</td><td>Expected</td></tr>";
       timetable?.appendChild(timeTableHeader);
       const timeTableBody = document.createElement('tbody');
       timetable?.appendChild(timeTableBody);

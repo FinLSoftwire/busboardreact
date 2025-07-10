@@ -1,5 +1,6 @@
 :root {
-    --table-header-colour: #3F95EE;
+    --table-header-colour: #135FAE;
+    --table-header-lighter: #3F95EE;
     --table-highlight-colour: #f3f3f3;
     --table-lowlight-colour: #E2E4E7;
     --table-dark-accent: #1772D1;
@@ -11,6 +12,7 @@
     margin-left: auto;
     margin-right: auto;
 }
+
 
 /* Table styling */
 table {
@@ -40,4 +42,10 @@ tbody tr:nth-of-type(even) {
 }
 tbody tr:last-of-type {
     border-bottom: 2px solid var(--table-dark-accent);
+}
+
+.column-title{
+    font-size: smaller;
+    font-style: oblique;
+    background-color: var(--table-header-lighter);
 }
