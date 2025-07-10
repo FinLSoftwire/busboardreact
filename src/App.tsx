@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './busboard';
 import {busInfo, getBusPredictions} from "./busboard";
+import './sitewide.css';
 
 async function getBuses(postcode: string): Promise<busInfo[][]> {
   // very basic testing string, you'll likely return a list of strings or JSON objects instead!
@@ -53,6 +54,7 @@ function App(): React.ReactElement {
   }
 
   return <>
+    <div className="container-fluid centred">
     <h1> BusBoard </h1>
     <form action="" onSubmit={formHandler}>
       <label htmlFor="postcodeInput"> Postcode: </label>
@@ -60,6 +62,7 @@ function App(): React.ReactElement {
       <input type="submit" value="Submit"/>
     </form>
     <div id="tableContainer"></div>
+    </div>
     {populateBusTimetable()}
   </>;
 }
