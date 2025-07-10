@@ -18,10 +18,7 @@ function App(): React.ReactElement {
   const [tableData, setTableData] = useState<busInfo[][]>([]);
   useEffect(() => {
     populateBusTimetable();
-    const loadingSpinnerElement = document.getElementById("loadingSpinner");
-    if (loadingSpinnerElement !== null) {
-      loadingSpinnerElement.classList.add("hidden");
-    }
+    hideElementById("loadingSpinner");
     }, [tableData])
   let refreshInterval: undefined | NodeJS.Timeout;
 
@@ -43,7 +40,6 @@ function App(): React.ReactElement {
     if (postcode !== postcodeReference.current)
       return;
     hideElementById("invalidPostcodeErrorMessage");
-    showElementById("loadingSpinner");
     clearTimeout(refreshInterval);
     try {
       const busInfoArray = await getBuses(postcode);
@@ -58,6 +54,7 @@ function App(): React.ReactElement {
   async function formHandler(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault(); // to stop the form refreshing the page when it submits
     clearTimeout(refreshInterval);
+    showElementById("loadingSpinner");
     updateBusTimetableInformation();
   }
 
