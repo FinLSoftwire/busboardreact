@@ -1,7 +1,42 @@
-h1 {
-    color: black;
+:root {
+    --table-header-colour: #009879;
+    --table-highlight-colour: #f3f3f3;
+    --table-lowlight-colour: #E2E4E7;
 }
 
+/* Class names */
 .centred {
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Table styling */
+table {
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin: 10px;
+    border-radius: 5px;
+    overflow: clip;
+}
+
+thead {
+    text-align: center;
+    background-color: var(--table-header-colour);
+    color: whitesmoke;
+}
+
+td {
+    padding: 5px 7px;
+}
+
+tbody tr {
+    background-color: var(--table-lowlight-colour);
+    border-bottom: 1px solid #dddddd;
+}
+tbody tr:nth-of-type(even) {
+    background-color: var(--table-highlight-colour);
+}
+tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
 }

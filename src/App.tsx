@@ -35,16 +35,17 @@ function App(): React.ReactElement {
     }
     tableContainer.innerHTML = "";
     tableData.forEach((busStopArrivalInfo)=>{
-      const timeTableHeader = document.createElement('header');
-      timeTableHeader.innerHTML = busStopArrivalInfo[0].stationName;
-      tableContainer?.appendChild(timeTableHeader);
       const timetable = document.createElement('table');
+      timetable.className = "centred";
       tableContainer?.appendChild(timetable);
       timetable.innerHTML = "";
-      timetable.style.borderWidth = "3px";
-      timetable.style.borderStyle = "solid";
+      const timeTableHeader = document.createElement('thead');
+      timeTableHeader.innerHTML = "<th colspan='3'>" + busStopArrivalInfo[0].stationName + "</th>";
+      timetable?.appendChild(timeTableHeader);
+      const timeTableBody = document.createElement('tbody');
+      timetable?.appendChild(timeTableBody);
       busStopArrivalInfo.forEach((arrivalInfo) => {
-        timetable?.appendChild(createTD(arrivalInfo));
+        timeTableBody?.appendChild(createTD(arrivalInfo));
       });
     });
   }
@@ -55,7 +56,7 @@ function App(): React.ReactElement {
 
   return <>
     <div className="container-fluid centred">
-    <h1> BusBoard </h1>
+    <h1> 🚌 BusBoard 🚌 </h1>
     <form action="" onSubmit={formHandler}>
       <label htmlFor="postcodeInput"> Postcode: </label>
       <input type="text" id="postcodeInput" onChange={updatePostcode}/>
