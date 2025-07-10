@@ -50,7 +50,7 @@ function History(): React.ReactElement {
     }
 
     function populatePage(){
-        document.addEventListener("load", event => {
+        window.addEventListener("load", () => {
             populateNavigation();
             populateContent();
         });
@@ -61,6 +61,6 @@ function History(): React.ReactElement {
     <div id="navigation"> </div>
     <div id="content-container">content blank </div>
         {populatePage()}
-            </>
+    </>
 }
 export default History;
