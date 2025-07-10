@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './sitewide.css';
 
+const contentText = require('./history.json')
+
 
 class history{
     public id: number;
@@ -13,25 +15,19 @@ class history{
     }
 }
 
-const contentText = require('./history.json')
+
 
 function History(): React.ReactElement {
-    const [content, setContent] = useState<string>("default text");
     const [contentEntryIndex, setContentEntryIndex] = useState<number>(0);
 
-    useEffect(() =>{ populatePage();
-        fetch ('history.json')
-        .then ((response: Response) => response.json())
-        .then (content => setContent(content))
-        .catch((error: Error) => console.error('cannot fetch content', error));
-    }, [populatePage]);
+    useEffect(() =>{ populatePage();}, [populatePage]);
+
 
     if (!contentText || contentText[0] === undefined) {
         return <div>Loading content...</div>;
     }
 
     function populatePageNavigation() :void {
-        console.log('populate navigation');
         let pageNavigation = document.getElementById('navigation');
         if (pageNavigation == null) {
             return;
@@ -47,7 +43,6 @@ function History(): React.ReactElement {
     }
 
     function populateContent() :void {
-        console.log('populate content');
         let container = document.getElementById('content-container');
         if (container == null){
             return;
@@ -56,7 +51,6 @@ function History(): React.ReactElement {
         container.innerHTML = contentText[contentEntryIndex].content;
     }
     function populatePage() :void {
-        console.log('populate page');
         populatePageNavigation();
         populateContent();
     }
