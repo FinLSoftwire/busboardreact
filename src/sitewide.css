@@ -7,6 +7,20 @@
     --error-color-dark: #AE1414;
     --error-color-light: pink;
     --search-bar-background: #F5F5F5;
+    --default-font: garamond;
+}
+
+
+/* General */
+
+body{
+    font-family: var(--default-font);
+    font-weight: 500;
+    font-size: 25px;
+}
+
+h1{
+    font-style: oblique;
 }
 
 /* Class names */
@@ -22,8 +36,34 @@
     background-color: var(--table-header-lighter);
 }
 
+.content-container{
+    padding: 2.5em;
+}
+
 .hidden {
     display: none;
+}
+
+.page-navigation{
+    display: block;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-color: gray;
+    padding: 10px;
+    width: 50vw;
+    margin: auto;
+}
+
+.page-navigation-button{
+    background-color: var(--table-dark-accent);
+    font-family: var(--default-font);
+    font-size: large;
+    font-weight: bold;
+    font-style: italic;
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    color: white;
 }
 
 .search-bar {
@@ -83,7 +123,7 @@ input:-webkit-autofill:active{
 table {
     border-collapse: collapse;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    margin: 10px;
+    margin: 30px;
     border-radius: 5px;
     overflow: clip;
 }
