@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './busboard';
 import {busInfo, getBusPredictions} from "./busboard";
 import './sitewide.css';
+import searchIcon from './searchIcon.png';
 
 async function getBuses(postcode: string): Promise<busInfo[][]> {
   return await getBusPredictions(postcode); // May throw an error for an invalid postcode - handle on form submission
@@ -66,9 +67,10 @@ function App(): React.ReactElement {
     <div className="container-fluid centred">
     <h1> 🚌 BusBoard 🚌 </h1>
     <form action="" onSubmit={formHandler}>
-      <label htmlFor="postcodeInput"> Postcode: </label>
-      <input type="text" id="postcodeInput" onChange={updatePostcode}/>
-      <input type="submit" value="Submit"/>
+      <div className="search-bar centred">
+        <input type="text" id="postcodeInput" onChange={updatePostcode}/>
+        <input type="image" alt="Submit" src={searchIcon}/>
+      </div>
     </form>
       <div className="error-container hidden" id="invalidPostcodeErrorMessage"><p className="centred">Invalid Postcode entered</p></div>
     <div id="tableContainer"></div>

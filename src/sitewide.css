@@ -25,6 +25,24 @@
     display: none;
 }
 
+.search-bar {
+    border-radius: 10px;
+    border-style: solid;
+    border-color: grey;
+    width: fit-content;
+    overflow: clip;
+    height: 2em;
+}
+
+.search-bar input {
+    margin: 0;
+    height: 100%;
+    padding: 0;
+}
+
+.search-bar input[type=image] {
+}
+
 .error-container {
     color: var(--error-color-dark);
 }
