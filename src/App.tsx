@@ -60,7 +60,7 @@ function App(): React.ReactElement {
   }
 
   function updatePostcode(data: React.ChangeEvent<HTMLInputElement>): void {
-    setPostcode(data.target.value)
+    setPostcode(data.target.value);
   }
 
   return <>
