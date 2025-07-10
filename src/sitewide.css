@@ -1,7 +1,8 @@
 :root {
-    --table-header-colour: #009879;
+    --table-header-colour: #3F95EE;
     --table-highlight-colour: #f3f3f3;
     --table-lowlight-colour: #E2E4E7;
+    --table-dark-accent: #1772D1;
 }
 
 /* Class names */
@@ -38,5 +39,5 @@ tbody tr:nth-of-type(even) {
     background-color: var(--table-highlight-colour);
 }
 tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+    border-bottom: 2px solid var(--table-dark-accent);
 }
