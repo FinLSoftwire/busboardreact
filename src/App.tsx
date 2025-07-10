@@ -2,7 +2,6 @@ import React, {useEffect, useState, useRef} from 'react';
 import './busboard';
 import {busInfo, getBusPredictions} from "./busboard";
 import './sitewide.css';
-
 import searchIcon from './searchIcon.png';
 
 async function getBuses(postcode: string): Promise<busInfo[][]> {
@@ -18,7 +17,7 @@ function App(): React.ReactElement {
     populateBusTimetable();
     hideElementById("loadingSpinner");
     }, [tableData])
-  let refreshInterval: undefined | NodeJS.Timeout;
+  let timetableUpdateTimeoutInterval: undefined | NodeJS.Timeout;
 
   function hideElementById(elementId: string) {
     const element = document.getElementById(elementId);
@@ -38,11 +37,11 @@ function App(): React.ReactElement {
     if (postcode !== postcodeReference.current)
       return;
     hideElementById("invalidPostcodeErrorMessage");
-    clearTimeout(refreshInterval);
+    clearTimeout(timetableUpdateTimeoutInterval);
     try {
       const busInfoArray = await getBuses(postcode);
       setTableData(busInfoArray);
-      refreshInterval = setTimeout(updateBusTimetableInformation, 30000);
+      timetableUpdateTimeoutInterval = setTimeout(updateBusTimetableInformation, 30000);
     } catch (e) {
       showElementById("invalidPostcodeErrorMessage");
       setTableData([]);
@@ -51,7 +50,7 @@ function App(): React.ReactElement {
 
   async function handlePostcodeInput(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault(); // to stop the form refreshing the page when it submits
-    clearTimeout(refreshInterval);
+    clearTimeout(timetableUpdateTimeoutInterval);
     showElementById("loadingSpinner");
     updateBusTimetableInformation();
   }
@@ -93,7 +92,9 @@ function App(): React.ReactElement {
 
   return <>
     <div className="container-fluid centred">
-      <h1> 🚌 BusBoard 🚌 </h1>
+      <div id="mainTitle" className="centred">
+        <h1> 🚌 BusBoard 🚌 </h1>
+      </div>
       <form action="" onSubmit={handlePostcodeInput}>
         <div className="search-bar centred">
           <input type="text" id="postcodeInput" onChange={updatePostcode}/>
