@@ -22,14 +22,14 @@ function History(): React.ReactElement {
         .catch((error: Error) => console.error('cannot fetch content', error));
     }, []);
 
-    if (!content || content[0] == undefined) {
+    if (!content || content[0] === undefined) {
         return <div>Loading content...</div>;
     }
 
     function populateNavigation(){
         let navigation = document.getElementById('navigation');
         if (navigation == null) {
-            return;
+            return <div>Loading navigation...</div>;
         }
         navigation.innerHTML = '';
         content.forEach((element: history) => {
@@ -43,18 +43,24 @@ function History(): React.ReactElement {
     function populateContent(){
         let container = document.getElementById('content-container');
         if (container == null){
-            return;
+            return <div>Loading content</div>;
         }
         container.innerHTML = "";
-        // let historyText = document.createElement("div");
-        // historyText.innerHTML = ;
         container.innerHTML = content[0].content;
+    }
+
+    function populatePage(){
+        document.addEventListener("load", event => {
+            populateNavigation();
+            populateContent();
+        });
     }
 
     return <>
     <h1> History of TfL Buses </h1>
-    <div id="navigation">  </div>
-    <div id="content-container">content blank </div>{populateNavigation()}{populateContent()}
-    </>
+    <div id="navigation"> </div>
+    <div id="content-container">content blank </div>
+        {populatePage()}
+            </>
 }
 export default History;
