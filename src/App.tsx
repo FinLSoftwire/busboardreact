@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import './busboard';
 import {busInfo, getBusPredictions} from "./busboard";
 import './sitewide.css';
@@ -9,11 +9,22 @@ async function getBuses(postcode: string): Promise<busInfo[][]> {
 }
 
 function App(): React.ReactElement {
+  const postcodeReference = useRef("");
   const [postcode, setPostcode] = useState<string>("");
+  useEffect(() => {
+    postcodeReference.current = postcode;
+  }, [postcode]);
   const [tableData, setTableData] = useState<busInfo[][]>([]);
+  useEffect(() => {
+    populateBusTimetable();}, [tableData])
+  let refreshInterval: undefined | NodeJS.Timeout;
 
-  async function formHandler(event: React.FormEvent<HTMLFormElement>): Promise<void> {
-    event.preventDefault(); // to stop the form refreshing the page when it submits
+  async function updateBusTimetableInformation() {
+    // Current postcode reference ensures that the postcode state checked here is up to date
+    // postcode will contain the state when the timeout is first invoked
+    if (postcode !== postcodeReference.current)
+      return;
+    clearTimeout(refreshInterval);
     const errorMessageContainer = document.getElementById("invalidPostcodeErrorMessage");
     try {
       const busInfoArray = await getBuses(postcode);
@@ -21,12 +32,18 @@ function App(): React.ReactElement {
       if (!errorMessageContainer?.classList.contains("hidden")) {
         errorMessageContainer?.classList.add("hidden");
       }
+      refreshInterval = setTimeout(updateBusTimetableInformation, 30000);
     } catch (e) {
       if (errorMessageContainer?.classList.contains("hidden")) {
         errorMessageContainer?.classList.remove("hidden");
       }
       setTableData([]);
     }
+  }
+  async function formHandler(event: React.FormEvent<HTMLFormElement>): Promise<void> {
+    event.preventDefault(); // to stop the form refreshing the page when it submits
+    clearTimeout(refreshInterval);
+    updateBusTimetableInformation();
   }
 
   function createTD(arrivalInfo: busInfo): HTMLTableRowElement {
@@ -36,9 +53,9 @@ function App(): React.ReactElement {
     return tableEntry;
   }
   function populateBusTimetable() {
-    console.log(tableData);
     let tableContainer = document.getElementById("tableContainer");
     if (tableContainer === null) {
+      console.log("Null table container");
       return;
     }
     tableContainer.innerHTML = "";
@@ -75,7 +92,6 @@ function App(): React.ReactElement {
       <div className="error-container hidden" id="invalidPostcodeErrorMessage"><p className="centred">Invalid Postcode entered</p></div>
     <div id="tableContainer"></div>
     </div>
-    {populateBusTimetable()}
   </>;
 }
 
