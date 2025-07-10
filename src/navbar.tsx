@@ -5,12 +5,11 @@ import './navbar.css';
 const Navbar = () => {
 
     return (<>
-    <Nav className="navbar navbar-default">
+    <Nav className="navbar">
         <div className="container-fluid">
-            <ul className="nav navbar-nav">
-                <li className = 'nav-item'><a href="/">Home</a></li>
-                <li className = 'nav-item'><a href="/history">History</a></li>
-            </ul>
+            <img src="./bus.png" className="icon"></img>
+                <div className = 'nav-item'><a href="/">Home</a></div>
+                <div className = 'nav-item'><a href="/history">History</a></div>
         </div>
     </Nav>
         </>

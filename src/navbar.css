@@ -1,17 +1,32 @@
 
-@import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css");
+@import url('sitewide.css');
 
 
-.navbar-default{
-    background-color: white;
+.icon {
+    max-width: 50px;
+    max-height: 50px;
+}
+.navbar{
+    display: block;
     font-size: large;
     font-family: var(--default-font);
     font-style: oblique;
     margin: 0;
-    padding: 0;
+    padding: .5em;
     color: black;
 }
 
-Nav{
+.nav-item{
+    display: inline;
     color: black;
+    padding: 1em;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--table-header-colour);
 }
