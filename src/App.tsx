@@ -12,9 +12,7 @@ async function getBuses(postcode: string): Promise<busInfo[][]> {
 function App(): React.ReactElement {
   const postcodeReference = useRef("");
   const [postcode, setPostcode] = useState<string>("");
-  useEffect(() => {
-    postcodeReference.current = postcode;
-  }, [postcode]);
+  useEffect(() => { postcodeReference.current = postcode; }, [postcode]);
   const [tableData, setTableData] = useState<busInfo[][]>([]);
   useEffect(() => {
     populateBusTimetable();
@@ -51,19 +49,20 @@ function App(): React.ReactElement {
     }
   }
 
-  async function formHandler(event: React.FormEvent<HTMLFormElement>): Promise<void> {
+  async function handlePostcodeInput(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault(); // to stop the form refreshing the page when it submits
     clearTimeout(refreshInterval);
     showElementById("loadingSpinner");
     updateBusTimetableInformation();
   }
 
-  function createTD(arrivalInfo: busInfo): HTMLTableRowElement {
+  function createBusInfoTableEntry(arrivalInfo: busInfo): HTMLTableRowElement {
     let tableEntry = document.createElement('tr');
     tableEntry.innerHTML = "<td>" + arrivalInfo.lineName + "</td><td>" +
         arrivalInfo.destination + "</td><td>" + Math.ceil(arrivalInfo.timeToArrival/60) + " mins </td>";
     return tableEntry;
   }
+
   function populateBusTimetable() {
     let tableContainer = document.getElementById("tableContainer");
     if (tableContainer === null) {
@@ -71,19 +70,19 @@ function App(): React.ReactElement {
       return;
     }
     tableContainer.innerHTML = "";
-    tableData.forEach((busStopArrivalInfo)=>{
-      const timetable = document.createElement('table');
-      timetable.className = "centred";
-      tableContainer?.appendChild(timetable);
-      timetable.innerHTML = "";
+    tableData.forEach((busStopArrivalsInfo)=>{
+      const busStopTimetable = document.createElement('table');
+      busStopTimetable.className = "centred";
+      tableContainer?.appendChild(busStopTimetable);
+      busStopTimetable.innerHTML = "";
       const timeTableHeader = document.createElement('thead');
-      timeTableHeader.innerHTML = "<tr><th colspan='3'>" + busStopArrivalInfo[0].stationName + "</th></tr>" +
+      timeTableHeader.innerHTML = "<tr><th colspan='3'>" + busStopArrivalsInfo[0].stationName + "</th></tr>" +
           "<tr class='column-title'><td>Bus Number</td><td>Destination</td><td>Expected</td></tr>";
-      timetable?.appendChild(timeTableHeader);
+      busStopTimetable?.appendChild(timeTableHeader);
       const timeTableBody = document.createElement('tbody');
-      timetable?.appendChild(timeTableBody);
-      busStopArrivalInfo.forEach((arrivalInfo) => {
-        timeTableBody?.appendChild(createTD(arrivalInfo));
+      busStopTimetable?.appendChild(timeTableBody);
+      busStopArrivalsInfo.forEach((arrivalInfo) => {
+        timeTableBody?.appendChild(createBusInfoTableEntry(arrivalInfo));
       });
     });
   }
@@ -95,7 +94,7 @@ function App(): React.ReactElement {
   return <>
     <div className="container-fluid centred">
       <h1> 🚌 BusBoard 🚌 </h1>
-      <form action="" onSubmit={formHandler}>
+      <form action="" onSubmit={handlePostcodeInput}>
         <div className="search-bar centred">
           <input type="text" id="postcodeInput" onChange={updatePostcode}/>
           <input type="image" alt="Submit" src={searchIcon}/>
