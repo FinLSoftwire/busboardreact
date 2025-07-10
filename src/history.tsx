@@ -22,23 +22,39 @@ function History(): React.ReactElement {
             .catch((error: Error) => console.error('cannot fetch content', error));
     }, []);
 
-    console.log(content);
-    if (!content) {
+    if (!content || content[0] == undefined) {
         return <div>Loading content...</div>;
     }
 
-    function populateContent(){
-        if (content != undefined){
-            let body = document.createElement("div");
-            body.innerHTML = content[0].name;
-            document.getElementById('content-container')?.appendChild(body);
+    function populateNavigation(){
+        let navigation = document.getElementById('navigation');
+        if (navigation == null) {
+            return <> Error: navigation not found </>;
         }
+        navigation.innerHTML = '';
+        content.forEach((element: history) => {
+            let newButton = document.createElement("button");
+            newButton.id = element.name;
+            newButton.innerHTML = element.name;
+            navigation?.appendChild(newButton);
+        })
+    }
+
+    function populateContent(){
+        let container = document.getElementById('content-container');
+        if (container == null){
+            return <div>Error in content-container</div>;
+        }
+        container.innerHTML = "";
+        // let historyText = document.createElement("div");
+        // historyText.innerHTML = ;
+        container.innerHTML = content[0].content;
     }
 
     return <>
     <h1> History of TfL Buses </h1>
-    <div className="navigation"></div>
-    <div id="content-container"></div>{populateContent()}
+    <div id="navigation">  </div>{populateNavigation()}
+    <div id="content-container">content blank </div>{populateContent()}
     </>
 }
 export default History;
