@@ -15,7 +15,7 @@ class history{
 function History(): React.ReactElement {
     const [content, setContent] = useState<history[]>([]);
 
-    useEffect(() =>{
+    useEffect(() =>{populatePage();
         fetch ('/history.json')
         .then ((response: Response) => response.json())
         .then (content => setContent(content))
@@ -48,19 +48,15 @@ function History(): React.ReactElement {
         container.innerHTML = "";
         container.innerHTML = content[0].content;
     }
-
     function populatePage(){
-        document.addEventListener("load", event => {
             populateNavigation();
             populateContent();
-        });
     }
 
     return <>
     <h1> History of TfL Buses </h1>
     <div id="navigation"> </div>
     <div id="content-container">content blank </div>
-        {populatePage()}
             </>
 }
 export default History;
