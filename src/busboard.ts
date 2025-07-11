@@ -71,7 +71,7 @@ const fetchBusStopsByLongitudeLatitude = async(longitude: number, latitude: numb
     }
 }
 
-async function getDisruptionsByID(stopPointID: number): Promise<lineDisruptionInfo[]> {
+export async function getDisruptionsByID(stopPointID: number): Promise<lineDisruptionInfo[]> {
     let lineDisruptions: lineDisruptionInfo[] = [];
     try {
         let stationDisruptionsResponse = await fetch("https://api.tfl.gov.uk/StopPoint/"+stopPointID+"/Disruption");

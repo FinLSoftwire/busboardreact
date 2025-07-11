@@ -102,7 +102,7 @@ function App(): React.ReactElement {
       </div>
       <form action="" onSubmit={handlePostcodeInput}>
         <div className="search-bar centred">
-          <input type="text" id="postcodeInput" onChange={updatePostcode}/>
+          <input type="text" id="postcodeInput" onChange={updatePostcode} placeholder="Postcode"/>
           <input type="image" alt="Submit" src={searchIcon}/>
         </div>
       </form>
