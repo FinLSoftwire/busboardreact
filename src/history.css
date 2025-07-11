@@ -26,6 +26,11 @@
     color: white;
 }
 
+img{
+    width: 50vw;
+    height: 50vh;
+}
+
 a {
     color: black;
     text-decoration: underline;
